@@ -59,7 +59,22 @@
                 subNodes = node.SubNodes;
             }
 
-            return node == null ? NoWords : node.GetNestedWords();
+            return node == null ? NoWords : RemoveVariants(node.GetNestedWords());
+        }
+
+        private IReadOnlySet<string> RemoveVariants(IReadOnlySet<string> words)
+        {
+            if (words.Count == 0)
+                return words;
+            
+            var wordsSet = new HashSet<string>(words);
+
+            foreach (var word in words.OrderBy(w => w.Length))
+            {
+                wordsSet.RemoveWhere(w => w != word && w.StartsWith(word));
+            }
+
+            return wordsSet;
         }
 
         public override void AddWord(string word)

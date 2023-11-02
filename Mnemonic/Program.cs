@@ -1,4 +1,5 @@
 ﻿using Mnemonic;
+using System.Text;
 
 var wordsTree = new WordsTree();
 
@@ -6,6 +7,8 @@ await foreach (var russianWord in RussianWordsReader.GetRussianWords())
 {
     wordsTree.AddWord(russianWord);
 }
+
+Console.OutputEncoding = Encoding.UTF8;
 
 while(true)
 {
